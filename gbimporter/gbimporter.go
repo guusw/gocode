@@ -29,7 +29,7 @@ func New(ctx *PackedContext, filename string, underlying types.ImporterFrom) typ
 	}
 	pathComparer := NewPathComparer(ctx)
 
-	slashed := filepath.ToSlash(filepath.Clean(filename))
+	slashed := filepath.ToSlash(filename)
 	i := strings.LastIndex(slashed, "/vendor/src/")
 	if i < 0 {
 		i = strings.LastIndex(slashed, "/src/")
