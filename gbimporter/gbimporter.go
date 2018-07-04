@@ -27,8 +27,7 @@ func New(ctx *PackedContext, filename string, underlying types.ImporterFrom) typ
 		ctx:        ctx,
 		underlying: underlying,
 	}
-	pathComparer := NewPathComparer(ctx)
-
+	
 	slashed := filepath.ToSlash(filename)
 	i := strings.LastIndex(slashed, "/vendor/src/")
 	if i < 0 {
@@ -39,11 +38,11 @@ func New(ctx *PackedContext, filename string, underlying types.ImporterFrom) typ
 
 		gbroot := filepath.FromSlash(slashed[:i])
 		gbvendor := filepath.Join(gbroot, "vendor")
-		if pathComparer.Compare(gbroot, imp.ctx.GOROOT) {
+		if samePath(gbroot, imp.ctx.GOROOT) {
 			goto Found
 		}
 		for _, path := range paths {
-			if pathComparer.Compare(path, gbroot) || pathComparer.Compare(path, gbvendor) {
+			if samePath(path, gbroot) || samePath(path, gbvendor) {
 				goto Found
 			}
 		}
